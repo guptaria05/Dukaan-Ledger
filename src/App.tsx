@@ -24,17 +24,15 @@ function Field({label,value,onChange,type="text",required=false,placeholder="",m
 const tabs:Tab[]=["Overview","Inventory","Sales","Customers","Vendors","Expenses","Reports","Seasons"];
 const csvCell=(v:unknown)=>'"'+String(v??"").replaceAll('"','""')+'"';
 function downloadPdf(name:string,title:string,rows:(string|number)[][]){
- const clean=(value:unknown)=>String(value??"").replaceAll("₹","Rs ").replaceAll("—","-").replaceAll("×","x").replaceAll("·","|").replace(/[^\\x20-\\x7E]/g,"");
- const wrap=(line:string,max=105)=>{const words=line.split(/\\s+/);const out:string[]=[];let current="";for(const word of words){if((current+" "+word).trim().length>max&&current){out.push(current);current=word;}else current=(current+" "+word).trim();}if(current)out.push(current);return out;};
- const lines=[title,"Generated: "+dateText(today()),"",...rows.flatMap((row,i)=>wrap(row.map(clean).join("  |  ")))];
+ const clean=(value:unknown)=>String(value??"").replaceAll("₹","Rs ").replaceAll("—","-").replaceAll("×","x").replaceAll("·","|").replace(/[^\x20-\x7E]/g,"");
+ const wrap=(line:string,max=105)=>{const words=line.split(/\s+/);const out:string[]=[];let current="";for(const word of words){if((current+" "+word).trim().length>max&&current){out.push(current);current=word;}else current=(current+" "+word).trim();}if(current)out.push(current);return out;};
+ const lines=[title,"Generated: "+dateText(today()),"",...rows.flatMap(row=>wrap(row.map(clean).join("  |  ")))];
  const pages:string[][]=[];for(let i=0;i<lines.length;i+=55)pages.push(lines.slice(i,i+55));
- const objects:string[]=[];objects[1]="<< /Type /Catalog /Pages 2 0 R >>";
- objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
- const pageIds=pages.map((_,i)=>4+i*2);
- objects[2]="<< /Type /Pages /Kids ["+pageIds.map(id=>id+" 0 R").join(" ")+"] /Count "+pages.length+" >>";
- pages.forEach((page,i)=>{const pageId=pageIds[i],streamId=pageId+1;const commands=["BT","/F1 9 Tf","40 800 Td","12 TL",...page.flatMap((line,j)=>{const escaped=line.replaceAll("\\\\","\\\\\\\\").replaceAll("(","\\\\(").replaceAll(")","\\\\)");return [j===0?"("+escaped+") Tj":"T* ("+escaped+") Tj"]; }),"ET"].join("\\n");objects[pageId]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents "+streamId+" 0 R >>";objects[streamId]="<< /Length "+commands.length+" >>\\nstream\\n"+commands+"\\nendstream";});
- let pdf="%PDF-1.4\\n";const offsets=[0];for(let id=1;id<objects.length;id++){if(!objects[id])continue;offsets[id]=pdf.length;pdf+=id+" 0 obj\\n"+objects[id]+"\\nendobj\\n";}const xref=pdf.length;pdf+="xref\\n0 "+objects.length+"\\n0000000000 65535 f \\n";for(let id=1;id<objects.length;id++)pdf+=(offsets[id]||0).toString().padStart(10,"0")+" 00000 n \\n";pdf+="trailer\\n<< /Size "+objects.length+" /Root 1 0 R >>\\nstartxref\\n"+xref+"\\n%%EOF";
- const blob=new Blob([pdf],{type:"application/pdf"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name.replace(/\\.csv$/i,".pdf").replace(/\\.pdf$/i,"")+".pdf";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+ const objects:string[]=[];objects[1]="<< /Type /Catalog /Pages 2 0 R >>";objects[3]="<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>";
+ const pageIds=pages.map((_,i)=>4+i*2);objects[2]="<< /Type /Pages /Kids ["+pageIds.map(id=>id+" 0 R").join(" ")+"] /Count "+pages.length+" >>";
+ pages.forEach((page,i)=>{const pageId=pageIds[i],streamId=pageId+1;const commands=["BT","/F1 9 Tf","40 800 Td","12 TL",...page.flatMap((line,j)=>{const escaped=line.replaceAll("\\","\\\\").replaceAll("(","\\(").replaceAll(")","\\)");return [j===0?"("+escaped+") Tj":"T* ("+escaped+") Tj"]; }),"ET"].join("\n");objects[pageId]="<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R >> >> /Contents "+streamId+" 0 R >>";objects[streamId]="<< /Length "+commands.length+" >>\nstream\n"+commands+"\nendstream";});
+ let pdf="%PDF-1.4\n";const offsets=[0];for(let id=1;id<objects.length;id++){if(!objects[id])continue;offsets[id]=pdf.length;pdf+=id+" 0 obj\n"+objects[id]+"\nendobj\n";}const xref=pdf.length;pdf+="xref\n0 "+objects.length+"\n0000000000 65535 f \n";for(let id=1;id<objects.length;id++)pdf+=(offsets[id]||0).toString().padStart(10,"0")+" 00000 n \n";pdf+="trailer\n<< /Size "+objects.length+" /Root 1 0 R >>\nstartxref\n"+xref+"\n%%EOF";
+ const blob=new Blob([pdf],{type:"application/pdf"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download=name.replace(/\.csv$/i,".pdf").replace(/\.pdf$/i,"")+".pdf";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 function App(){
  const [data,setData]=useState<Data>(read);const [tab,setTab]=useState<Tab>("Overview");const [notice,setNotice]=useState("");const [search,setSearch]=useState("");const [theme,setTheme]=useState<"light"|"dark">(()=>localStorage.getItem("dukaan-ledger-theme")==="dark"?"dark":"light");
