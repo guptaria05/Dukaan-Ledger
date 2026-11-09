@@ -56,3 +56,68 @@
 
 .customer-items{white-space:normal;min-width:130px;max-width:230px;line-height:1.5}
 @media(max-width:740px){.customer-items{min-width:120px;max-width:170px}}
+
+
+/* Refined visual system + accessible theme switch */
+body{background:#f3f6f1}
+button{transition:background .18s ease,border-color .18s ease,color .18s ease,transform .18s ease,box-shadow .18s ease}
+.primary{box-shadow:0 5px 12px #244f3b1c}
+.primary:hover{background:#193e2d;transform:translateY(-1px);box-shadow:0 7px 16px #244f3b26}
+.secondary:hover,.quick button:hover{border-color:#a9c5aa;background:#f4f8f2;transform:translateY(-1px)}
+.panel,.metric,.toolbar,.quick{box-shadow:0 3px 14px rgba(34,62,43,.035);transition:box-shadow .2s ease,border-color .2s ease}
+.panel:hover,.metric:hover{box-shadow:0 7px 22px rgba(34,62,43,.065);border-color:#dce7da}
+.heading h1{letter-spacing:-1px}
+.metric{border-radius:15px;padding:18px 19px}
+.metric>strong{letter-spacing:-.6px}
+.panel{border-radius:15px}
+.topbar{position:sticky;top:0;z-index:3;backdrop-filter:blur(14px);background:rgba(255,255,255,.94)}
+.theme-toggle{display:inline-flex;align-items:center;gap:7px;height:32px;padding:0 11px;border:1px solid #e2e9df;border-radius:9px;background:#f8faf7;color:#45634d;font-size:10px;font-weight:700}
+.theme-toggle:hover{background:#edf5eb;border-color:#b8ceb6}
+.demo-load{margin-top:12px}
+input,select{transition:border-color .18s ease,box-shadow .18s ease}
+@media(min-width:741px){.content{padding-top:38px}.heading{margin-bottom:27px}.metrics{gap:16px}.columns{gap:18px}}
+@media(max-width:740px){.theme-toggle{width:33px;justify-content:center;padding:0}.theme-toggle span{display:none}.top-right{gap:9px}}
+.theme-dark{background:#101a16;color:#e4eee7}
+.theme-dark main{background:#101a16}
+.theme-dark .topbar{background:rgba(22,35,29,.94);border-color:#293a30}
+.theme-dark .crumb,.theme-dark .top-right{color:#9aafa1}
+.theme-dark .crumb b{color:#e1ece4}
+.theme-dark .heading h1,.theme-dark .panel h2,.theme-dark .quick h2{color:#e5efe8}
+.theme-dark .heading small,.theme-dark .heading p,.theme-dark .panel-head p,.theme-dark .quick p,.theme-dark .form-panel>p{color:#91a397}
+.theme-dark .metric,.theme-dark .panel,.theme-dark .toolbar,.theme-dark .quick{background:#1a2a22;border-color:#2b4034;box-shadow:0 4px 18px rgba(0,0,0,.12)}
+.theme-dark .metric-label,.theme-dark .metric>small,.theme-dark td,.theme-dark .field span,.theme-dark .inventory-summary,.theme-dark .muted{color:#a7b8ac}
+.theme-dark .metric>strong,.theme-dark td b,.theme-dark .report-row b,.theme-dark .net{color:#e1eee5}
+.theme-dark th{color:#91a498;border-color:#304238}
+.theme-dark td,.theme-dark .alert,.theme-dark .simple-row,.theme-dark .season-card{border-color:#2b3c32}
+.theme-dark .field input,.theme-dark .field select,.theme-dark .search input,.theme-dark .chart-controls select,.theme-dark .chart-controls input{background:#132119;border-color:#35483b;color:#e1ece4}
+.theme-dark .search{border-color:#35483b}
+.theme-dark .secondary,.theme-dark .quick button{background:#20352a;border-color:#3a5544;color:#c8dfce}
+.theme-dark .secondary:hover,.theme-dark .quick button:hover{background:#294333;border-color:#66856d}
+.theme-dark .primary{background:#78a982;border-color:#78a982;color:#102016}
+.theme-dark .primary:hover{background:#8bb891}
+.theme-dark .theme-toggle{background:#263a2d;border-color:#405747;color:#e5eee7}
+.theme-dark .theme-toggle:hover{background:#304a38}
+.theme-dark .paid{background:#203e2c;color:#9ad2a7}
+.theme-dark .due{background:#493923;color:#f0c47c}
+.theme-dark .count,.theme-dark .alert>span{background:#493923;color:#f0c47c}
+.theme-dark .empty>span{background:#263d2e;color:#9bc7a0}
+.theme-dark .empty b{color:#dce9df}
+.theme-dark .empty p,.theme-dark .hint,.theme-dark .season-card small{color:#9aada0}
+.theme-dark .chart-total strong,.theme-dark .big-number{color:#9ac9a1}
+.theme-dark .chart-total span,.theme-dark .season-card p{color:#9aada0}
+.theme-dark .bar-chart{border-color:#35483b}
+.theme-dark .bar-track{background:#26392d}
+.theme-dark .bar-track i{background:#80ad87}
+.theme-dark .report-row,.theme-dark .net,.theme-dark .subsection{border-color:#304238}
+.theme-dark .track{background:#2a3b30}
+.theme-dark .season-banner{background:#20352a;border-color:#365342}
+.theme-dark .season-mark{background:#304b37;color:#a6d0a5}
+.theme-dark .season-items{background:#263d2e;color:#b8d8bc}
+.theme-dark .mobile-nav{background:#192820;border-color:#304238}
+.theme-dark .mobile-nav button{color:#91a397}
+.theme-dark .mobile-nav button.chosen{color:#9acb9f}
+.theme-dark footer{color:#7f9486}
+.theme-dark .store,.theme-dark .tip{background:#1d4034}
+.theme-dark .owner{border-color:#35594b}
+.theme-dark .toast{background:#d9edca;color:#193b2d}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
