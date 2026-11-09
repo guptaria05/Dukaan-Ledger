@@ -32,6 +32,7 @@ export type Product = {
   price: number;
   stock: number;
   threshold: number;
+  expiryDate?: string;
   createdAt?: string;
   seasonIds?: string[];
 };
@@ -194,6 +195,7 @@ function read(): Data {
       })),
       products: (x.products || []).map((p: Product) => ({
         ...p,
+        expiryDate: p.expiryDate || "",
         createdAt: p.createdAt || "",
         seasonIds: p.seasonIds || [],
       })),

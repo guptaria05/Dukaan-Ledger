@@ -2499,3 +2499,39 @@ a {
   from { opacity: 0; transform: translateY(16px); }
   to { opacity: 1; transform: translateY(0); }
 }
+.expiry-summary {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 12px 0 16px;
+}
+
+.expiry-summary span {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border: 1px solid var(--amber-border);
+  border-radius: var(--radius-sm);
+  background-color: var(--amber-bg);
+  color: var(--amber);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.expiry-summary b {
+  font-size: 13px;
+  font-weight: 800;
+}
+
+@media (max-width: 740px) {
+  .expiry-summary {
+    gap: 8px;
+  }
+  .expiry-summary span {
+    flex: 1;
+    justify-content: center;
+    font-size: 11px;
+    padding: 8px;
+  }
+}
