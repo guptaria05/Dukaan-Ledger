@@ -343,3 +343,9 @@ footer{font-size:9px;padding-top:26px}
 }
 .theme-dark .mobile-nav{background:rgba(25,40,32,.97);border-color:#304638}
 .theme-dark .mobile-nav button.chosen{background:#294333;color:#b7dfbd}
+
+.expiry-summary{display:flex;gap:10px;flex-wrap:wrap;margin:-3px 0 14px}
+.expiry-summary span{display:inline-flex;align-items:center;gap:6px;padding:8px 11px;border:1px solid #f0dfc3;border-radius:8px;background:#fff8eb;color:#8a642e;font-size:10px}
+.expiry-summary b{font-size:12px}
+.theme-dark .expiry-summary span{background:#493923;border-color:#65502f;color:#f0c47c}
+@media(max-width:740px){.expiry-summary{gap:7px}.expiry-summary span{flex:1;justify-content:center;font-size:9px;padding:8px 6px}}
