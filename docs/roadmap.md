@@ -8,12 +8,13 @@
 - [x] Single-item sales with partial payment
 - [x] Customer balances and payment collection
 - [x] Dashboard and gross-profit report
+- [x] Expense entry and monthly net-profit estimate
 - [x] CI and finance unit tests
 
 ## Milestone 2 — Retail workflows
 - [ ] Customer picker and multi-item cart
 - [ ] Bill history and receipt sharing
-- [ ] Expense tracking and net-profit report
+- [x] Expense tracking and net-profit report
 - [ ] Product edit/archive, categories and barcode support
 - [ ] Returns, damaged stock and stock adjustments
 - [ ] CSV export
