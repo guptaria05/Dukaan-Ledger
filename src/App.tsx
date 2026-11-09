@@ -19,7 +19,7 @@ const rupees=(p:number)=>new Intl.NumberFormat("en-IN",{style:"currency",currenc
 const cents=(s:string)=>Math.max(0,Math.round(Number(s||0)*100));
 const dateText=(s:string)=>s?new Date(s+"T00:00:00").toLocaleDateString("en-IN",{day:"numeric",month:"short",year:"numeric"}):"—";
 const monthKey=(d:string)=>d.slice(0,7);
-function read():Data{try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return {...EMPTY,...x,customers:(x.customers||[]).map((c:Customer)=>({...c,createdAt:c.createdAt||today()})),products:(x.products||[]).map((p:Product)=>({...p,createdAt:p.createdAt||today(),seasonIds:p.seasonIds||[]})),vendors:x.vendors||[],purchases:x.purchases||[],stockMoves:x.stockMoves||[],seasons:x.seasons||[]};}catch{return EMPTY;}}
+function read():Data{try{const x=JSON.parse(localStorage.getItem(KEY)||"{}");return {...EMPTY,...x,customers:(x.customers||[]).map((c:Customer)=>({...c,createdAt:c.createdAt||""})),products:(x.products||[]).map((p:Product)=>({...p,createdAt:p.createdAt||"",seasonIds:p.seasonIds||[]})),vendors:x.vendors||[],purchases:x.purchases||[],stockMoves:x.stockMoves||[],seasons:x.seasons||[]};}catch{return EMPTY;}}
 function Field({label,value,onChange,type="text",required=false,placeholder="",min}:{label:string;value:string;onChange:(v:string)=>void;type?:string;required?:boolean;placeholder?:string;min?:string}){return <label className="field"><span>{label}</span><input type={type} value={value} onChange={e=>onChange(e.target.value)} required={required} placeholder={placeholder} min={min??(type==="number"?"0":undefined)}/></label>}
 const tabs:Tab[]=["Overview","Inventory","Sales","Customers","Vendors","Expenses","Reports","Seasons"];
 const csvCell=(v:unknown)=>'"'+String(v??"").replaceAll('"','""')+'"';
