@@ -53,3 +53,6 @@
  .bar-col small{font-size:7px}
  .season-banner{align-items:flex-start}
 }
+
+.customer-items{white-space:normal;min-width:130px;max-width:230px;line-height:1.5}
+@media(max-width:740px){.customer-items{min-width:120px;max-width:170px}}
