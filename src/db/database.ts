@@ -79,6 +79,11 @@ export async function getDashboardSummary():Promise<DashboardSummary>{
     (SELECT COUNT(*) FROM products WHERE stock_quantity<=low_stock_threshold) AS lowStockCount`);
   return row as DashboardSummary;
 }
+export async function recordExpense(input:{title:string;amountPaise:number;category?:string}):Promise<void>{
+  if(!input.title.trim())throw new Error("Enter an expense description.");if(!Number.isSafeInteger(input.amountPaise)||input.amountPaise<=0)throw new Error("Expense must be greater than zero.");
+  const database=await getDatabase();const expenseId=makeId("exp");await database.runAsync("INSERT INTO expenses(id,title,amount_paise,category) VALUES(?,?,?,?)",expenseId,input.title.trim(),input.amountPaise,input.category?.trim()||"Other");await database.runAsync("INSERT INTO audit_events(id,entity_type,entity_id,action) VALUES(?,?,?,?)",makeId("aud"),"expense",expenseId,"created");
+}
+export async function getMonthlyExpenses():Promise<{month:string;expensesPaise:number}[]>{const database=await getDatabase();return database.getAllAsync<{month:string;expensesPaise:number}>("SELECT strftime('%Y-%m',created_at) AS month,SUM(amount_paise) AS expensesPaise FROM expenses GROUP BY strftime('%Y-%m',created_at) ORDER BY month DESC LIMIT 12");}
 export async function getMonthlyGrossProfit():Promise<{month:string;profitPaise:number}[]>{
   const db=await getDatabase();return db.getAllAsync<{month:string;profitPaise:number}>(`SELECT strftime('%Y-%m',s.created_at) AS month,SUM((si.unit_price_paise-si.unit_cost_paise)*si.quantity) AS profitPaise
     FROM sales s JOIN sale_items si ON si.sale_id=s.id WHERE s.created_at>=date('now','-11 months','start of month') GROUP BY strftime('%Y-%m',s.created_at) ORDER BY month`);
