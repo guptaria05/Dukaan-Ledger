@@ -72,7 +72,7 @@ export async function getDashboardSummary():Promise<DashboardSummary>{
     COALESCE((SELECT SUM(stock_quantity*purchase_price_paise) FROM products),0) AS stockValuePaise,
     COALESCE((SELECT SUM(total_paise) FROM sales WHERE date(created_at)=date('now','localtime')),0) AS todaySalesPaise,
     COALESCE((SELECT SUM((si.unit_price_paise-si.unit_cost_paise)*si.quantity) FROM sale_items si JOIN sales s ON s.id=si.sale_id WHERE date(s.created_at)=date('now','localtime')),0) AS todayGrossProfitPaise,
-    COALESCE((SELECT SUM(total_paise) FROM sales),0)-COALESCE((SELECT SUM(amount_paise) FROM payments),0) AS outstandingPaise,
+    COALESCE((SELECT SUM(total_paise) FROM sales WHERE customer_id IS NOT NULL),0)-COALESCE((SELECT SUM(amount_paise) FROM payments WHERE customer_id IS NOT NULL),0) AS outstandingPaise,
     (SELECT COUNT(*) FROM products WHERE stock_quantity<=low_stock_threshold) AS lowStockCount`);
   return row as DashboardSummary;
 }
