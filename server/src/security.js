@@ -1,5 +1,5 @@
 import {
-  createHash,
+  createHmac,
   randomBytes,
   scrypt as scryptCallback,
   timingSafeEqual,
@@ -11,7 +11,7 @@ const KEY_LENGTH = 64;
 
 export const newToken = (bytes = 32) => randomBytes(bytes).toString("base64url");
 export const tokenHash = (token) =>
-  createHash("sha256").update(token, "utf8").digest("hex");
+  createHmac("sha256", process.env.SESSION_SECRET).update(token, "utf8").digest("hex");
 
 export async function hashPassword(password) {
   const salt = randomBytes(16);
