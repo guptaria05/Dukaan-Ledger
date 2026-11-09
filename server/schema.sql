@@ -45,3 +45,18 @@ CREATE OR REPLACE FUNCTION prune_expired_sessions() RETURNS void
 LANGUAGE SQL AS $$
   DELETE FROM sessions WHERE expires_at <= NOW();
 $$;
+
+
+-- Durable OpenID Connect grants, sessions, authorization codes and tokens.
+CREATE TABLE IF NOT EXISTS oidc_artifacts (
+  model VARCHAR(80) NOT NULL,
+  id VARCHAR(255) NOT NULL,
+  payload JSONB NOT NULL,
+  expires_at TIMESTAMPTZ,
+  consumed_at TIMESTAMPTZ,
+  created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (model, id)
+);
+CREATE INDEX IF NOT EXISTS oidc_artifacts_expiry_idx ON oidc_artifacts(expires_at);
+CREATE INDEX IF NOT EXISTS oidc_artifacts_grant_idx ON oidc_artifacts((payload->>'grantId'));

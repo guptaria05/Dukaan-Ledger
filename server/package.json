@@ -6,9 +6,12 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "node --watch src/index.js",
-    "check": "node --check src/index.js && node --check src/app.js && node --check src/security.js && node --check src/db.js"
+    "check": "node --check src/index.js && node --check src/app.js && node --check src/security.js && node --check src/db.js && node --check src/oidc.js && node --check src/oidc-adapter.js",
+    "test": "node --test"
   },
-  "engines": { "node": ">=20.19.0" },
+  "engines": {
+    "node": ">=20.19.0"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
@@ -17,6 +20,7 @@
     "google-auth-library": "^10.3.0",
     "helmet": "^8.1.0",
     "pg": "^8.16.3",
-    "zod": "^4.1.12"
+    "zod": "^4.1.12",
+    "oidc-provider": "~9.13.3"
   }
 }

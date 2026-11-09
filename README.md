@@ -18,7 +18,7 @@ Dukaan Ledger is a responsive shop-management website built with React, TypeScri
 
 ## Authentication and account backend (in progress)
 
-The `server/` directory contains the first backend milestone: email/password registration and login, Google credential verification, secure server-side sessions, CSRF protection, and per-account cloud-data storage. See [`server/README.md`](server/README.md) for setup and API details. The React login/account interface and browser-data migration are being added next. The OpenID Connect SSO issuer is a separate follow-up milestone and is not available yet.
+The `server/` directory contains email/password registration and login, Google credential verification, secure server-side sessions, CSRF protection, and per-account cloud-data storage. The React login gate and browser-data import flow are included. See [`server/README.md`](server/README.md) for setup and API details. A standards-based OpenID Connect issuer is included for pre-registered relying-party applications, using authorization-code flow and mandatory PKCE. It must be configured with registered clients and deployment secrets before external apps can use it.
 
 ## Run locally
 Requirements: Node.js 20.19+ or 22.12+ and npm.

@@ -72,7 +72,7 @@ function clearSessionCookie(res) {
   res.clearCookie(SESSION_COOKIE, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     path: "/",
   });
 }
@@ -135,7 +135,7 @@ app.get("/api/auth/csrf", (_req, res) => {
   res.cookie(CSRF_COOKIE, token, {
     httpOnly: false,
     secure: isProduction,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     path: "/",
   });
   res.set("Cache-Control", "no-store");
@@ -188,11 +188,16 @@ app.post("/api/auth/google", authLimiter, requireCsrf, async (req, res, next) =>
     }
     const credential = z.string().min(20).max(10000).safeParse(req.body?.credential);
     if (!credential.success) return res.status(400).json({ error: "A valid Google credential is required." });
-    const ticket = await googleClient.verifyIdToken({
-      idToken: credential.data,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const payload = ticket.getPayload();
+    let payload;
+    try {
+      const ticket = await googleClient.verifyIdToken({
+        idToken: credential.data,
+        audience: process.env.GOOGLE_CLIENT_ID,
+      });
+      payload = ticket.getPayload();
+    } catch {
+      return res.status(401).json({ error: "Google sign-in could not be verified." });
+    }
     if (!payload?.sub || !payload.email || payload.email_verified !== true) {
       return res.status(401).json({ error: "Google did not provide a verified email address." });
     }
@@ -225,9 +230,6 @@ app.post("/api/auth/google", authLimiter, requireCsrf, async (req, res, next) =>
     await createSession(user.id, res);
     return res.json({ user: publicUser(user) });
   } catch (error) {
-    if (error?.name === "Error" || error?.message?.includes("Token used too early")) {
-      return res.status(401).json({ error: "Google sign-in could not be verified." });
-    }
     return next(error);
   }
 });

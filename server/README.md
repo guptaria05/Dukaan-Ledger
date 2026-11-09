@@ -29,7 +29,17 @@ The API listens on port 4000 by default. Configure the Vite frontend to call thi
 - `POST /api/auth/logout`
 - `GET /api/data` and `PUT /api/data` — private account-scoped JSON document with optimistic revision checks.
 
-For mutating requests, fetch the CSRF token first and send it in `X-CSRF-Token`. Send requests with credentials enabled. Session cookies are HttpOnly, SameSite=Lax, and Secure in production.
+For mutating requests, fetch the CSRF token first and send it in `X-CSRF-Token`. Send requests with credentials enabled. Session cookies are HttpOnly; they use SameSite=Lax locally and SameSite=None; Secure in production so a separately hosted frontend can call the API. Modern browsers may restrict third-party cookies, so production should use a frontend and API on the same site (for example, app.example.com and api.example.com).
+
+## OpenID Connect client registration
+
+Set `OIDC_ISSUER_URL` to the exact public issuer URL (for example `https://api.example.com/oidc`). Set `OIDC_FRONTEND_URL` to the deployed frontend and `OIDC_COOKIE_SECRET` to a separate random secret. Configure `OIDC_CLIENTS` as a JSON array. A public SPA/native client should use `token_endpoint_auth_method: "none"`, `response_types: ["code"]`, `grant_types: ["authorization_code"]`, an exact `redirect_uris` list, and PKCE S256. Confidential server-side clients should use a supported client authentication method and keep their secret server-side. Never use implicit or password grants.
+
+Example public client (replace the ID and callback with the actual application values):
+
+```json
+[{"client_id":"example-app","redirect_uris":["https://app.example.com/auth/callback"],"response_types":["code"],"grant_types":["authorization_code"],"token_endpoint_auth_method":"none"}]
+```
 
 ## Important deployment settings
 
@@ -37,4 +47,4 @@ Set `DATABASE_URL`, `SESSION_SECRET`, `GOOGLE_CLIENT_ID`, `FRONTEND_ORIGINS`, `N
 
 ## Current scope and next milestones
 
-This foundation is not yet the complete SSO release. The next milestones are the frontend login/account experience and migration of existing browser data, followed by a standards-based OpenID Connect issuer for relying-party applications. Do not advertise OIDC SSO as available until that issuer and its authorization-code/PKCE flow have been implemented and tested.
+This foundation is not yet the complete SSO release. The next milestones are account recovery, account settings, full end-to-end testing, and deployment configuration. Existing browser data import is explicit and leaves the legacy copy in place. Do not use this as a production identity service until the issuer has been tested against a real relying-party client, its public issuer URL and client registrations are configured, and deployment secrets are set.

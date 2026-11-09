@@ -17,3 +17,4 @@ jobs:
       - run: npm run build
       - run: npm install --prefix server
       - run: npm run check --prefix server
+      - run: npm test --prefix server

@@ -140,7 +140,11 @@ type ModalType =
   | "quick-menu"
   | "more-menu";
 
-const KEY = "dukaan-ledger-web-v1";
+const LEGACY_KEY = "dukaan-ledger-web-v1";
+const storageKey = () => {
+  const accountId = localStorage.getItem("dukaan-active-user-id");
+  return accountId ? LEGACY_KEY + ":" + accountId : LEGACY_KEY;
+};
 const EMPTY: Data = {
   products: [],
   customers: [],
@@ -185,7 +189,7 @@ const monthKey = (d: string) => d.slice(0, 7);
 
 function read(): Data {
   try {
-    const x = JSON.parse(localStorage.getItem(KEY) || "{}");
+    const x = JSON.parse(localStorage.getItem(storageKey()) || "{}");
     return {
       ...EMPTY,
       ...x,
@@ -323,7 +327,8 @@ function App() {
   }, [theme]);
 
   useEffect(() => {
-    localStorage.setItem(KEY, JSON.stringify(data));
+    localStorage.setItem(storageKey(), JSON.stringify(data));
+    window.dispatchEvent(new CustomEvent("dukaan:data-updated", { detail: data }));
   }, [data]);
 
   useEffect(() => {
@@ -1237,10 +1242,10 @@ function App() {
             </div>
           </div>
           <div className="owner-profile">
-            <div className="owner-avatar">R</div>
+            <div className="owner-avatar">{(localStorage.getItem("dukaan-active-user-name") || "S").charAt(0).toUpperCase()}</div>
             <div className="owner-info">
-              <strong>Shop Owner</strong>
-              <span>Active Terminal</span>
+              <strong>{localStorage.getItem("dukaan-active-user-name") || "Shop Owner"}</strong>
+              <span>{localStorage.getItem("dukaan-active-user-name") ? "Account owner" : "Active Terminal"}</span>
             </div>
           </div>
         </div>
@@ -1284,7 +1289,14 @@ function App() {
             </button>
 
             <div className="date-badge desktop-only">{dateText(today())}</div>
-            <div className="profile-pill desktop-only">R</div>
+            <button
+              className="profile-pill desktop-only"
+              title="Sign out"
+              aria-label="Sign out of Dukaan Ledger"
+              onClick={() => window.dispatchEvent(new Event("dukaan:logout"))}
+            >
+              {(localStorage.getItem("dukaan-active-user-name") || "S").charAt(0).toUpperCase()}
+            </button>
           </div>
         </header>
 
