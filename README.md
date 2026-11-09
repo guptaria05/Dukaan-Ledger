@@ -16,6 +16,10 @@ Dukaan Ledger is a responsive shop-management website built with React, TypeScri
 - Expense tracking and estimated net-profit reporting.
 - Responsive desktop and mobile-browser layout.
 
+## Authentication and account backend (in progress)
+
+The `server/` directory contains the first backend milestone: email/password registration and login, Google credential verification, secure server-side sessions, CSRF protection, and per-account cloud-data storage. See [`server/README.md`](server/README.md) for setup and API details. The React login/account interface and browser-data migration are being added next. The OpenID Connect SSO issuer is a separate follow-up milestone and is not available yet.
+
 ## Run locally
 Requirements: Node.js 20.19+ or 22.12+ and npm.
 

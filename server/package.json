@@ -1,0 +1,22 @@
+{
+  "name": "dukaan-ledger-api",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "node --watch src/index.js",
+    "check": "node --check src/index.js && node --check src/app.js && node --check src/security.js && node --check src/db.js"
+  },
+  "engines": { "node": ">=20.19.0" },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^5.1.0",
+    "express-rate-limit": "^8.1.0",
+    "google-auth-library": "^10.3.0",
+    "helmet": "^8.1.0",
+    "pg": "^8.16.3",
+    "zod": "^4.1.12"
+  }
+}
