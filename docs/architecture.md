@@ -10,7 +10,8 @@ Expo Router + React Native + TypeScript with a local SQLite database. The first 
 - Procurement: purchases increase stock and capture supplier and cost.
 - Sales: capture snapshots of item name, unit cost and selling price, then decrement stock.
 - Customer ledger: customer-linked sales create outstanding balances; later payments reduce them.
-- Reporting: daily sales, gross profit, inventory cost value, low-stock count and monthly gross profit.
+- Expenses: operating costs with descriptions and categories.
+- Reporting: daily sales, gross profit, inventory cost value, low-stock count, monthly gross profit, expenses and a simple net-profit estimate.
 
 ## Data integrity
 
