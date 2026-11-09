@@ -121,3 +121,97 @@ input,select{transition:border-color .18s ease,box-shadow .18s ease}
 .theme-dark .owner{border-color:#35594b}
 .theme-dark .toast{background:#d9edca;color:#193b2d}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;scroll-behavior:auto!important}}
+
+
+/* UI refresh: clearer hierarchy, calmer surfaces, and complete theme coverage */
+:root{color-scheme:light}
+html[data-theme="dark"]{color-scheme:dark}
+.shell{background:#f4f7f2;min-height:100vh}
+.theme-dark{background:#101a16}
+.content{max-width:1540px}
+.heading{position:relative;padding:2px 0 3px}
+.heading h1{font-size:clamp(23px,2.2vw,30px);line-height:1.2}
+.heading p{font-size:12px;line-height:1.55}
+.heading small{letter-spacing:1.8px}
+.metrics{gap:16px}
+.metric{position:relative;overflow:hidden;border-radius:16px;padding:19px 20px}
+.metric:after{content:"";position:absolute;right:-24px;bottom:-35px;width:100px;height:100px;border-radius:50%;background:rgba(111,157,120,.055);pointer-events:none}
+.metric-label{font-size:11px}
+.metric>strong{font-size:25px}
+.metric>small{font-size:10px}
+.panel{padding:20px;border-radius:16px}
+.panel h2,.quick h2{font-size:14px}
+.panel-head{margin-bottom:17px}
+.panel-head p,.form-panel>p{font-size:10px}
+th{font-size:9px;padding:12px 11px}
+td{font-size:10px;padding:13px 11px}
+td b{font-size:11px}
+td small{font-size:9px}
+.sidebar{box-shadow:8px 0 28px rgba(17,48,34,.07)}
+.nav{padding:12px 13px;font-size:13px;border:1px solid transparent}
+.nav:hover:not(.active){background:rgba(255,255,255,.075);color:#f0f6f1}
+.nav.active{box-shadow:0 5px 14px rgba(0,0,0,.08)}
+.store{margin-top:2px}
+.topbar{height:72px;padding-inline:clamp(18px,3vw,44px);box-shadow:0 3px 16px rgba(28,54,36,.035)}
+.top-right{font-size:11px}
+.top-right i{width:34px;height:34px}
+.theme-toggle{height:36px;padding:0 13px;border-radius:10px;font-size:11px;gap:9px}
+.theme-toggle:focus-visible,.nav:focus-visible,button:focus-visible{outline:3px solid #9bc89e;outline-offset:2px}
+.primary,.secondary{height:39px;font-size:11px;border-radius:9px}
+.field{gap:7px}
+.field span{font-size:10px}
+.field input,.field select,.search input{height:39px;font-size:11px;border-radius:9px;padding-inline:11px}
+.search{min-height:39px;border-radius:9px}
+.chart-panel{padding:21px}
+.chart-total strong{font-size:25px}
+.bar-chart{height:220px}
+.bar-track{height:165px}
+.quick{border-radius:16px;padding:18px}
+.quick button{border-radius:11px;padding:14px;min-height:84px}
+.quick button span{font-size:20px}
+.toolbar{border-radius:13px;padding:14px 16px}
+.empty{padding:42px 14px}
+.toast{font-size:11px;padding:13px 18px;border-radius:12px}
+footer{font-size:9px;padding-top:26px}
+
+/* Keep every surface and text legible in dark mode */
+.theme-dark{color:#e4eee7}
+.theme-dark .shell{background:#101a16}
+.theme-dark .heading h1,.theme-dark .panel h2,.theme-dark .quick h2,.theme-dark .subsection h3{color:#edf5ef}
+.theme-dark .metric-label,.theme-dark .field span,.theme-dark .inventory-summary{color:#b5c7ba}
+.theme-dark .metric>strong{color:#f0f6f1}
+.theme-dark .panel-head p,.theme-dark .heading p,.theme-dark .form-panel>p,.theme-dark .muted{color:#a0b3a5}
+.theme-dark .panel,.theme-dark .metric,.theme-dark .toolbar,.theme-dark .quick{background:#1a2a22;border-color:#304638}
+.theme-dark .panel:hover,.theme-dark .metric:hover{border-color:#45624d;box-shadow:0 9px 25px rgba(0,0,0,.2)}
+.theme-dark .topbar{box-shadow:0 4px 18px rgba(0,0,0,.18)}
+.theme-dark .field input,.theme-dark .field select,.theme-dark .search input,.theme-dark .chart-controls select,.theme-dark .chart-controls input{background:#132119;color:#edf5ef;border-color:#3a5141}
+.theme-dark .field input::placeholder,.theme-dark .search input::placeholder{color:#829789}
+.theme-dark th{color:#9eb1a3}
+.theme-dark td{color:#b9c9bd}
+.theme-dark td b{color:#e6f0e8}
+.theme-dark .alert b,.theme-dark .simple-row b{color:#e4eee7}
+.theme-dark .season-banner{background:#20352a}
+.theme-dark .season-items{background:#263d2e}
+.theme-dark .quick button{background:#20352a;border-color:#354e3c;color:#e2eee4}
+.theme-dark .quick button span{color:#a9d1ad}
+.theme-dark .theme-toggle{border-color:#405747;background:#263a2d;color:#e8f2ea}
+.theme-dark .secondary{border-color:#45624d;background:#20352a;color:#d6e8d9}
+.theme-dark .primary{background:#8dbb94;border-color:#8dbb94;color:#14271a}
+.theme-dark .empty p,.theme-dark .hint{color:#a0b2a4}
+.theme-dark footer{color:#819688}
+.theme-dark .report-row{color:#b3c4b7}
+.theme-dark .report-row b{color:#e4eee7}
+.theme-dark .net{color:#e4eee7}
+.theme-dark .due-text{color:#f0c47c}
+@media(max-width:740px){
+ .topbar{height:60px}
+ .content{padding:21px 13px 18px}
+ .heading h1{font-size:22px}
+ .metric{padding:14px;border-radius:13px}
+ .metric>strong{font-size:20px}
+ .panel{padding:14px;border-radius:13px}
+ .panel-head{gap:8px}
+ .quick{border-radius:13px}
+ .mobile-nav{box-shadow:0 -6px 24px rgba(25,48,31,.07);padding-top:9px}
+ .theme-dark .mobile-nav{box-shadow:0 -6px 24px rgba(0,0,0,.2)}
+}
