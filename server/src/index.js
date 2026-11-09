@@ -1,9 +1,13 @@
 import "dotenv/config";
+import { readFile } from "node:fs/promises";
 import app from "./app.js";
 import { mountOidc } from "./oidc.js";
 import { pool } from "./db.js";
 
 const port = Number(process.env.PORT || 4000);
+// Apply idempotent schema migrations before accepting traffic.
+const schema = await readFile(new URL("../schema.sql", import.meta.url), "utf8");
+await pool.query(schema);
 await mountOidc(app);
 app.use((error, _req, res, next) => {
   console.error("Unhandled API error:", error?.message || "Unknown error");
