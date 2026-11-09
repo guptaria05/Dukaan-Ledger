@@ -62,7 +62,7 @@ function setSessionCookie(res, token, expiresAt) {
   res.cookie(SESSION_COOKIE, token, {
     httpOnly: true,
     secure: isProduction,
-    sameSite: "lax",
+    sameSite: isProduction ? "none" : "lax",
     path: "/",
     expires: expiresAt,
   });
