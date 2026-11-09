@@ -74,12 +74,11 @@ export async function mountOidc(app) {
       email: ["email", "email_verified"],
     },
     features: {
-      devInteractions: { enabled: false },
-      registration: { enabled: false },
-      pkce: { supportedMethods: ["S256"] },
-      revocation: { enabled: true },
-      introspection: { enabled: true },
-    },
+  devInteractions: { enabled: false },
+  registration: { enabled: false },
+  revocation: { enabled: true },
+  introspection: { enabled: true },
+},
     cookies: {
       keys: [cookieSecret],
       short: { sameSite: isProduction ? "none" : "lax", secure: isProduction },
