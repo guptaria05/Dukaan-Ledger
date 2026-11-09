@@ -1,13 +1,7 @@
-# Privacy policy — development draft
+# Privacy and data handling
 
-Last updated: 9 November 2026
+The current website stores shop records in localStorage in the browser where the website is opened. The application does not currently send these records to a Dukaan Ledger server because no application backend or account system is included.
 
-Dukaan Ledger's current development build stores shop records locally in the app's SQLite database on the device. This milestone does not include user accounts, cloud synchronization, analytics, advertising, or transmission of customer and sales records to a Dukaan Ledger server.
+Anyone with access to the same browser profile may be able to access its saved shop data. Clearing browser data can remove the records. Users should not enter highly sensitive information and should not rely on this prototype as their only financial record until export, backup and recovery are implemented.
 
-The app may store product names, stock quantities, purchase and selling prices, customer names, optional phone numbers, sales, and payment records on the device. Anyone with access to an unlocked device or an exported database backup may be able to view those records.
-
-Uninstalling the app or clearing its storage may remove locally stored records. Users should maintain a secure backup before changing devices.
-
-Before any cloud service, analytics, crash reporting, or third-party integration is introduced, this policy must be updated to identify the data collected, purpose, processors, retention period, security measures, and user controls. A production privacy policy must include a contact method and be reviewed before public distribution.
-
-This is a development draft, not a final legal document.
+A production release should add a clear privacy notice, authenticated storage, transport encryption, access controls, retention controls, data export and deletion workflows.

@@ -1,26 +1,12 @@
-# Architecture
+# Web architecture
 
-## Current milestone
+Dukaan Ledger is a single-page React application built with Vite and TypeScript.
 
-Expo Router + React Native + TypeScript with a local SQLite database. The first milestone is local-first so core workflows work without a network connection.
+- UI: React application in src/App.tsx.
+- Styling: responsive CSS in src/styles.css.
+- Entry point: src/main.tsx.
+- Persistence: browser localStorage, namespaced under dukaan-ledger-web-v1.
+- Currency: integer paise, displayed as Indian rupees.
+- Deployment output: Vite dist directory.
 
-## Modules
-
-- Inventory: products, SKU, category, unit, purchase/selling price and stock.
-- Procurement: purchases increase stock and capture supplier and cost.
-- Sales: capture snapshots of item name, unit cost and selling price, then decrement stock.
-- Customer ledger: customer-linked sales create outstanding balances; later payments reduce them.
-- Expenses: operating costs with descriptions and categories.
-- Reporting: daily sales, gross profit, inventory cost value, low-stock count, monthly gross profit, expenses and a simple net-profit estimate.
-
-## Data integrity
-
-- Currency is stored as integer paise.
-- Sales, sale items, stock decrement and initial payment are written in one SQLite transaction.
-- Sale items snapshot cost at sale time; later product price changes do not rewrite historical gross profit.
-- Posted financial history should be corrected with reversing entries, not silent deletion.
-- Database constraints validate quantities and monetary values.
-
-## Future cloud milestones
-
-Add shop, user and membership entities before enabling cloud sync. Enforce tenant-scoped authorization server-side. Use an outbox with idempotency keys, conflict handling, encrypted transport, backups and export/deletion flows. Do not enable multi-device sync until tenant isolation and conflict behavior are tested.
+The current implementation is browser-local and single-device. A future hosted version should add authenticated APIs, a relational database, server-side validation, backups, audit history and role-based access before enabling shared shop accounts.

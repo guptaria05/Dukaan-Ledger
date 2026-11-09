@@ -1,7 +1,0 @@
-export function calculateLineTotal(unitPricePaise:number,quantity:number):number{assertMoney(unitPricePaise);assertQuantity(quantity);return unitPricePaise*quantity;}
-export function calculateGrossProfit(sellingPricePaise:number,purchasePricePaise:number,quantity:number):number{assertMoney(sellingPricePaise);assertMoney(purchasePricePaise);assertQuantity(quantity);return(sellingPricePaise-purchasePricePaise)*quantity;}
-export function calculateOutstanding(totalPaise:number,paidPaise:number):number{assertMoney(totalPaise);assertMoney(paidPaise);if(paidPaise>totalPaise)throw new Error("Payment cannot exceed the bill total.");return totalPaise-paidPaise;}
-export function calculateNetProfit(grossProfitPaise:number,expensesPaise:number):number{assertMoney(grossProfitPaise);assertMoney(expensesPaise);return grossProfitPaise-expensesPaise;}
-export function formatINR(paise:number):string{if(!Number.isSafeInteger(paise))throw new Error("Money must be an integer number of paise.");return new Intl.NumberFormat("en-IN",{style:"currency",currency:"INR",maximumFractionDigits:2}).format(paise/100);}
-function assertMoney(value:number):void{if(!Number.isSafeInteger(value)||value<0)throw new Error("Money must be a non-negative integer number of paise.");}
-function assertQuantity(value:number):void{if(!Number.isSafeInteger(value)||value<=0)throw new Error("Quantity must be a positive whole number.");}

@@ -1,40 +1,18 @@
 # Roadmap
 
-## Milestone 1 — Local-first foundation
-- [x] Expo Router and TypeScript setup
-- [x] SQLite persistence
-- [x] Inventory create/list
-- [x] Stock purchase recording
-- [x] Single-item sales with partial payment
-- [x] Customer balances and payment collection
-- [x] Dashboard and gross-profit report
-- [x] Expense entry and monthly net-profit estimate
-- [x] CI and finance unit tests
+## Web MVP in repository
+- Responsive dashboard and mobile navigation.
+- Product inventory and low-stock alerts.
+- Stock purchase and weighted-average cost updates.
+- Sales with stock deduction and sale-time cost snapshots.
+- Customer accounts, outstanding balances and payment allocation.
+- Expense tracking and monthly estimated profit report.
+- Browser-local persistence.
 
-## Milestone 2 — Retail workflows
-- [ ] Customer picker and multi-item cart
-- [ ] Bill history and receipt sharing
-- [x] Expense tracking and net-profit report
-- [ ] Product edit/archive, categories and barcode support
-- [ ] Returns, damaged stock and stock adjustments
-- [ ] CSV export
-
-## Milestone 3 — Reliability
-- [ ] Database migrations and migration tests
-- [ ] Local backup/export and restore
-- [ ] PIN/biometric lock and audit screens
-- [ ] Automated UI tests and accessibility review
-
-## Milestone 4 — Cloud and multiple shops
-- [ ] Authentication and shop membership
-- [ ] Tenant-scoped API and database policies
-- [ ] Cloud backup and device synchronization
-- [ ] Employee roles and permissions
-- [ ] Conflict resolution and idempotent sync
-
-## Milestone 5 — Distribution
-- [ ] Expo EAS Android build
-- [ ] Signed APK/AAB release pipeline
-- [ ] GitHub Releases
-- [ ] Privacy policy and data safety documentation
-- [ ] Pilot testing with shopkeepers
+## Next milestones
+1. Add data export/import and backup/restore.
+2. Add authentication and a secure hosted database.
+3. Add multi-device sync and multiple shop support.
+4. Add full sale invoices, carts, returns and purchase history.
+5. Add staff roles, audit log and reporting filters.
+6. Add deployment, monitoring and automated end-to-end tests.

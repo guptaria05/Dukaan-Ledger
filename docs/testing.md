@@ -1,26 +1,19 @@
-# Testing strategy
+# Testing
 
-## Automated checks
+Before merging changes, run:
 
-GitHub Actions runs on pushes and pull requests:
+    npm install
+    npm run typecheck
+    npm run build
 
-1. Install Node dependencies.
-2. Run TypeScript type checking.
-3. Run Vitest unit tests for money, quantities, gross profit and outstanding balances.
-4. Export the Android JavaScript bundle with Expo to catch Metro and route bundling failures.
+Manually verify:
+- Add a product and confirm it appears in inventory.
+- Record a stock purchase and confirm stock and weighted-average cost update.
+- Record a sale and confirm stock decreases.
+- Confirm a credit sale requires a customer and cannot exceed available stock.
+- Collect a customer payment and verify outstanding balances reduce.
+- Add an expense and verify the monthly report changes.
+- Refresh the browser and confirm records persist in that browser.
+- Check navigation at desktop and mobile widths.
 
-## Manual device checks before a pilot
-
-- Create a product and verify it remains after app restart.
-- Record a purchase and verify stock and weighted-average cost.
-- Record a fully paid walk-in sale.
-- Record a partly paid customer sale and verify outstanding balance.
-- Collect a partial customer payment and verify the balance decreases.
-- Attempt to sell more stock than is available; confirm it is rejected.
-- Attempt an unpaid walk-in sale; confirm a customer must be selected.
-- Enable airplane mode and verify local operations still work.
-- Export/restore a database backup once backup support is added.
-
-## Current limitations
-
-The automated pipeline does not yet run an Android emulator or end-to-end UI tests. CI success is necessary but not a substitute for testing on real Android devices.
+The current web milestone does not yet include a dedicated automated component or end-to-end test suite.

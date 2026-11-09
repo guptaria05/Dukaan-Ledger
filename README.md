@@ -1,63 +1,36 @@
-# Dukaan Ledger
+# Dukaan Ledger — Web
 
-A mobile-first shop-management app for independent retailers.
+Dukaan Ledger is now a responsive website for managing a small retail shop. The previous Expo / React Native application has been replaced by a React + Vite + TypeScript web application.
 
-## Current build
-
-- Expo SDK 58, React Native and TypeScript.
-- Local SQLite persistence (offline-first).
-- Product inventory and low-stock visibility.
-- Purchase recording with weighted-average inventory cost.
-- Sales with stock deduction and partial payments.
-- Customer ledger and outstanding balances (udhaar).
-- Customer payment collection.
-- Shop expense entry and monthly gross/net profit summaries.
-- GitHub Actions checks for dependency compatibility, Expo diagnostics, TypeScript, unit tests and Android bundle export.
+## Features
+- Dashboard with daily sales, gross profit, stock investment and customer dues.
+- Product inventory and low-stock alerts.
+- Stock purchases with weighted-average cost updates.
+- Sales recording with automatic stock deduction and sale-time cost snapshots.
+- Customer accounts, credit balances and payment collection.
+- Expense tracking and monthly revenue, cost and estimated net-profit reporting.
+- Responsive desktop and mobile-browser layout.
 
 ## Run locally
+Requirements: Node.js 20.19+ or 22.12+ and npm.
 
-Requirements: Node.js 22.13+ and npm.
+    npm install
+    npm run dev
 
-```bash
-npm install
-npx expo install --fix
-npx expo start
-```
+Open the local URL printed by Vite, usually http://localhost:5173.
 
-Run checks:
+## Production build
 
-```bash
-npm run doctor
-npm run typecheck
-npm test
-npm run export:android
-```
+    npm run typecheck
+    npm run build
+    npm run preview
 
-## Build an installable Android APK
+The production website is generated in the dist directory and can be deployed to Vercel, Netlify or any static hosting provider.
 
-The project includes EAS build profiles. After creating an Expo account and configuring EAS:
+## Data storage and privacy
+This milestone stores records in localStorage in the current browser on the current device. It does not yet include accounts, cloud sync, multi-device access or server-side backups. Clearing browser data or switching devices can make records unavailable. Export/import and authenticated cloud persistence should be implemented before relying on this as the only record system for a real shop.
 
-```bash
-npx eas-cli build --platform android --profile preview
-```
+## Financial notes
+Amounts are stored as integer paise. Sales preserve the product cost at the time of sale. Credit sales require a customer, and stock cannot be sold below zero.
 
-The preview profile creates an APK for direct installation. The production profile creates an Android App Bundle for a future Play Store release. Build signing and release credentials must remain in the build service, never in Git.
-
-## Data and privacy
-
-The current milestone stores shop records locally in SQLite on the device. It does not yet include user accounts, cloud synchronization, remote backup or a production backend. See [the privacy policy draft](docs/privacy-policy.md).
-
-Cloud accounts, multiple shops, employee permissions and cross-device sync are planned, not yet implemented. Do not use this development build as the only record of a real shop's accounts until backup/export and recovery have been completed and tested.
-
-## Financial calculations
-
-Money is stored as integer paise. Sales capture the product's weighted-average unit cost at the time of sale, so later purchase-price changes do not rewrite the cost used for historical gross-profit calculations. Customer credit sales require a customer record.
-
-## Project docs
-
-- [Architecture](docs/architecture.md)
-- [Roadmap](docs/roadmap.md)
-- [Testing strategy](docs/testing.md)
-- [Privacy policy draft](docs/privacy-policy.md)
-
-Private project. Add a license before distributing the source publicly.
+The repository keeps its existing Git history, but its application source has been replaced with the web implementation.
