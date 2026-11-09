@@ -42,6 +42,7 @@ export async function recordSale(input:SaleInput):Promise<SaleResult>{
   if(input.paidPaise<0||input.paidPaise>total||!Number.isSafeInteger(input.paidPaise))throw new Error("Payment must be between zero and the bill total.");
   if(input.customerId&&!await db.getFirstAsync("SELECT id FROM customers WHERE id=?",input.customerId))throw new Error("Customer not found.");
   const saleId=makeId("sal");const outstanding=calculateOutstanding(total,input.paidPaise);
+  if(outstanding>0&&!input.customerId)throw new Error("Select a customer when a sale is not fully paid.");
   const grossProfit=calculateGrossProfit(product.selling_price_paise,product.purchase_price_paise,input.quantity);
   await db.withTransactionAsync(async()=>{
     await db.runAsync("INSERT INTO sales(id,customer_id,total_paise) VALUES(?,?,?)",saleId,input.customerId??null,total);
@@ -57,6 +58,7 @@ export async function recordCustomerPayment(input:{customerId:string;amountPaise
   const db=await getDatabase();const row=await db.getFirstAsync<{balance:number}>(`SELECT COALESCE((SELECT SUM(total_paise) FROM sales WHERE customer_id=?),0)-COALESCE((SELECT SUM(amount_paise) FROM payments WHERE customer_id=?),0) AS balance`,input.customerId,input.customerId);
   if(!row||row.balance<=0)throw new Error("This customer has no outstanding balance.");if(input.amountPaise>row.balance)throw new Error("Payment cannot exceed the outstanding balance.");
   await db.runAsync("INSERT INTO payments(id,customer_id,amount_paise,method,note) VALUES(?,?,?,?,?)",makeId("pay"),input.customerId,input.amountPaise,input.method,input.note?.trim()||null);
+  await db.runAsync("INSERT INTO audit_events(id,entity_type,entity_id,action) VALUES(?,?,?,?)",makeId("aud"),"customer",input.customerId,"payment_received");
 }
 export async function recordPurchase(input:{productId:string;quantity:number;unitCostPaise:number;supplierName?:string}):Promise<void>{
   if(!Number.isSafeInteger(input.quantity)||input.quantity<=0)throw new Error("Quantity must be a positive whole number.");
@@ -64,7 +66,8 @@ export async function recordPurchase(input:{productId:string;quantity:number;uni
   const db=await getDatabase();if(!await db.getFirstAsync("SELECT id FROM products WHERE id=?",input.productId))throw new Error("Product not found.");
   await db.withTransactionAsync(async()=>{
     await db.runAsync("INSERT INTO purchases(id,product_id,quantity,unit_cost_paise,total_paise,supplier_name) VALUES(?,?,?,?,?,?)",makeId("pur"),input.productId,input.quantity,input.unitCostPaise,input.quantity*input.unitCostPaise,input.supplierName?.trim()||null);
-    await db.runAsync("UPDATE products SET stock_quantity=stock_quantity+?,purchase_price_paise=?,updated_at=CURRENT_TIMESTAMP WHERE id=?",input.quantity,input.unitCostPaise,input.productId);
+    await db.runAsync("UPDATE products SET purchase_price_paise=CASE WHEN stock_quantity+?>0 THEN CAST((stock_quantity*purchase_price_paise+?*?)/(stock_quantity+?) AS INTEGER) ELSE ? END,stock_quantity=stock_quantity+?,updated_at=CURRENT_TIMESTAMP WHERE id=?",input.quantity,input.quantity,input.unitCostPaise,input.quantity,input.unitCostPaise,input.quantity,input.productId);
+    await db.runAsync("INSERT INTO audit_events(id,entity_type,entity_id,action) VALUES(?,?,?,?)",makeId("aud"),"purchase",input.productId,"stock_received");
   });
 }
 export async function getDashboardSummary():Promise<DashboardSummary>{
