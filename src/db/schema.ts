@@ -12,5 +12,6 @@ CREATE TABLE IF NOT EXISTS sale_items(id TEXT PRIMARY KEY NOT NULL,sale_id TEXT 
 CREATE TABLE IF NOT EXISTS payments(id TEXT PRIMARY KEY NOT NULL,customer_id TEXT REFERENCES customers(id),sale_id TEXT REFERENCES sales(id),amount_paise INTEGER NOT NULL CHECK(amount_paise>0),method TEXT NOT NULL CHECK(method IN('cash','upi','bank','other')),note TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 CREATE INDEX IF NOT EXISTS idx_payments_customer ON payments(customer_id);
 CREATE TABLE IF NOT EXISTS purchases(id TEXT PRIMARY KEY NOT NULL,product_id TEXT NOT NULL REFERENCES products(id),quantity INTEGER NOT NULL CHECK(quantity>0),unit_cost_paise INTEGER NOT NULL CHECK(unit_cost_paise>=0),total_paise INTEGER NOT NULL CHECK(total_paise>=0),supplier_name TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
+CREATE TABLE IF NOT EXISTS expenses(id TEXT PRIMARY KEY NOT NULL,title TEXT NOT NULL,amount_paise INTEGER NOT NULL CHECK(amount_paise>0),category TEXT NOT NULL DEFAULT 'Other',created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 CREATE TABLE IF NOT EXISTS audit_events(id TEXT PRIMARY KEY NOT NULL,entity_type TEXT NOT NULL,entity_id TEXT NOT NULL,action TEXT NOT NULL,details TEXT,created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP);
 `;
