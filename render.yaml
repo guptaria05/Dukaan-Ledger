@@ -28,10 +28,10 @@ services:
       - key: OIDC_COOKIE_SECRET
         generateValue: true
       - key: FRONTEND_ORIGINS
-        value: https://dukaan-ledger.vercel.app
+        value: https://dukaan-ledger-phi.vercel.app
       - key: OIDC_ISSUER_URL
-        value: https://dukaan-ledger-api.onrender.com/oidc
+        value: https://dukaan-ledger-api-vxuc.onrender.com/oidc
       - key: OIDC_FRONTEND_URL
-        value: https://dukaan-ledger.vercel.app
+        value: https://dukaan-ledger-phi.vercel.app
       - key: OIDC_CLIENTS
         value: "[]"
